@@ -1,8 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+
+import { withAuthenticator } from "aws-amplify-react";
+import { Analytics } from "aws-amplify";
 
 function App() {
+  const recordEvent = () => {
+    console.log("about to record event");
+    Analytics.record({
+      name: "Test Event 1",
+      attributes: {
+        username: "dabit3"
+      }
+    });
+  };
   return (
     <div className="App">
       <header className="App-header">
@@ -19,8 +31,9 @@ function App() {
           Learn React
         </a>
       </header>
+      <button onClick={recordEvent}>Record Event</button>
     </div>
   );
 }
 
-export default App;
+export default withAuthenticator(App);
